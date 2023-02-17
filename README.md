@@ -1,109 +1,131 @@
-# jogo-aeds-1 - Repositório base para o TP de AEDS 1 / 2022.2
+﻿**Documentação do trabalho prático 1**
 
-## Sobre este repositório
+**Algoritmo e Estrutura de Dados 1**
 
-Para começar a desenvolver o seu trabalho, clone este repositório. Ele vem com
-todas as configurações de debug e compilação para Windows e para Linux
-configuradas e testadas, para que você possa focar em desenvolver o jogo.
+**Acadêmico:** Geraldo Arthur Detomi
 
-## Como usar?
+**Professor:** Elverton Carvalho Fazzion
 
-Primeiro, certifique-se de instalar **Git**. Os comandos para instalar estão
-disponíveis abaixo, dependendo do seu Sistema Operacional.
 
-<details>
-<summary><b>🐧 Para Debian/Ubuntu/Pop_OS!/ElementaryOS</b></summary>
+**Movimentação da cobra**
 
-```sh
-$ sudo apt install git
-```
+`	`A solução, para movimentar a cobra, primeiramente foi criar uma *struct* de segmentos com coordenadas x e y, como a interface gráfica trabalha, e como a função desenha\_retangulo() da biblioteca funciona.
 
-</details>
+`	`Logo após, criei uma *struct* cobra contendo ultima\_tecla do tipo *caracter* para saber a última tecla pressionada do usuário; uma variável inteira chamada tamanho\_cobra onde nela armazeno a quantidade de segmentos preenchidos da cobra atual; um vetor da *struct* segmentos de tamanho máximo 300, para preencher cada segmento novo e uma variável inteira chamada tamanho\_segmentos para saber qual o tamanho de cada segmento da cobra.
 
-<details>
-<summary><b>🐧 Para ArchLinux</b></summary>
+`	`A solução, basicamente, foi criar uma função para desenhar a cobra e outra para ir preenchendo os segmentos, aumentando a cobra caso ela comesse alguma fruta.
 
-```sh
-$ sudo pacman -S git
-```
+`	`A lógica para o movimento da cobra foi a seguinte: a cada movimento realizado pelo usuário o último segmento do vetor passa a ser a cabeça da cobra (posição 0), e a cabeça da cobra passa a ser o último segmento, porém deslocado seja para direita ou esquerda, para cima ou para baixo na posição x ou y atual. Assim, foi somada a posição atual de cada segmento mais a variável tamanho\_segmento, e logo após, trás todos os outros segmentos para mais perto, numa distância tamanho\_segmentos mais posição x ou y.
 
-</details>
 
-<details>
-<summary><b>🪟 Para Windows</b></summary>
 
-Para Windows 10 (acima da versão 1809) e Windows 11, rode o seguinte comando no
-seu PowerShell:
+**Verificação de colisões da cobra**
 
-```pwsh
-PS> winget install Git.Git
-```
+`	`A solução para verificar se a cobra colidiu com as paredes foi receber as coordenadas da cabeça da cobra x e y, no caso o segmento da posição 0. Logo após, usando algumas variáveis já pronta da biblioteca como altura\_janela, e largura\_janela e sabendo como funciona o eixo x e y da interface gráfica, determinei os limite superiores, inferiores e laterais.
 
-Para versões do Windows mais antigas (10 < 1809, 8.1, 8, 7, Vista, XP, Etc.),
-[baixe o instalador aqui](https://git-scm.com/download/win).
+`	`A seguir, bastou comparar as posições fazendo uma validação com um *if()* perguntando se a posição da cabeça da cobra se encontrava entre esses limites. Para saber se a cobra mordeu o próprio corpo fiz um laço *for()* percorrendo todos os segmentos e comparei com a cabeça, desse modo, caso a cabeça se encontrasse na mesma posição com alguns dos outros segmentos significa que havia perdido: fiz uma verificação de trás pra frente comparando a cabeça com o rabo até o penúltimo segmento.
 
-**⚠️ Importante**: Após instalar o Git, feche e abra a linha de comando que você
-usou
+`	`Para verificar se a cobra comeu a maça utilizei a mesma lógica de coordenadas, fiz cálculos para descobrir a abrangência da área da maçã desenhada, caso a cabeça da cobra passe por essa área significa que a cobra comeu a maçã.
 
-</details>
 
-<br/>
 
-Com o **Git** instalado, escolha uma pasta qualquer no seu computador, entre
-nela com o seu terminal e rode os seguintes comandos para clonar este
-repositório:
 
-```sh
-$ git clone --recursive https://github.com/syndelis/jogo-aeds-1 tp-aeds1
-$ cd tp-aeds1
-```
 
-Esse comando criará uma pasta chamada **`tp-aeds1`** com todo o conteúdo deste
-repositório. A partir daí, basta alterar os arquivos dentro de **`src/`** para
-desenvolver o seu jogo!
 
-## Compilando o seu jogo
 
-Primeiro, instale as dependências [detalhadas aqui](https://github.com/Syndelis/jogo.h#instalando-as-depend%C3%AAncias-).
 
-Após instaladas, rode o comando de compilação, dependendo do seu Sistema
-Operacional:
 
-<details>
-<summary><b>🐧 Para Linux</b></summary>
 
-```sh
-$ make
-```
 
-</details>
+**Função:**
 
-<details>
-<summary><b>🪟 Para Windows</b></summary>
+**jogar\_jogo\_padrão();** basta chamar essa função na *main* do programa C e incluir as dependências para jogar um jogo padrão feito por mim.
 
-```pwsh
-PS> .\compilar.ps1
-```
+![](Aspose.Words.a4184637-4889-4c9e-b16a-591e21d0fd20.001.png)
 
-**⚠️ Atenção**: Pode ser que o comando acima falhe porque "a execução de
-scripts foi desabilitada neste sistema". Caso ocorra com você, abra um
-PowerShell como administrador e rode o seguinte comando
-**e reinicie seu computador**:
 
-```pwsh
-PS> Set-ExecutionPolicy Unrestricted
-```
 
-</details>
 
-## Documentação
 
-A documentação detalhando como usar a biblioteca de desenvolvimento de jogos
-**`jogo.h`** [está disponível aqui](https://syndelis.github.io/jogo.h).
 
-## Dúvidas
 
-**Alunos da disciplina**: Se tiverem qualquer dúvida, contatem a mim (Brenno) ou
-ao professor.
 
-**Não alunos**: Abra uma *Issue* no [repositório da bibliotca](https://github.com/syndelis/jogo.h).
+
+
+
+
+**Tela Inicial do jogo**
+
+`	`Para selecionar jogar basta apertar a tecla “enter”, para sair do jogo basta pressionar a tecla “esc”.
+
+`	`![](Aspose.Words.a4184637-4889-4c9e-b16a-591e21d0fd20.002.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+**Menu de velocidades**
+
+`	`Para escolher a velocidade basta pressionar a tecla “espaço”, para sair do jogo basta pressionar a tecla “esc”.
+
+![](Aspose.Words.a4184637-4889-4c9e-b16a-591e21d0fd20.003.png)
+
+
+
+
+
+
+
+
+
+
+
+
+**Durante o jogo**
+
+`	`Para movimentar a cobra é possível usar as setas do teclado ou as teclas w, a, s,d, para sair do jogo basta pressionar a tecla “esc”, ao sair seu score é salvo.
+
+`		`![](Aspose.Words.a4184637-4889-4c9e-b16a-591e21d0fd20.004.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+**Perdeu o jogo**
+
+`	`Ao perder o jogo, é listado o ranking mostrando do maior ranking ao menor, caso você aperte a tecla “espaço”, o jogo é reiniciado e você tem uma nova partida, porém a sua pontuação antiga é perdida, essa informação é passada pelo próprio jogo quando se perde a partida.
+
+`		`![](Aspose.Words.a4184637-4889-4c9e-b16a-591e21d0fd20.005.png)![](Aspose.Words.a4184637-4889-4c9e-b16a-591e21d0fd20.006.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
